@@ -6,7 +6,7 @@ from fastapi import HTTPException
 from managers.auth import AuthManager
 
 
-pwd_context= CryptContext(schemes=["bycrypt"], deprecated="auto")
+pwd_context= CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 @staticmethod
 class UserManager:
