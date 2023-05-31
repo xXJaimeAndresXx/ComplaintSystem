@@ -11,7 +11,7 @@ from models import user
 
 class AuthManager:
     @staticmethod
-    def encode_token(self, user):
+    def encode_token(user):
         try:
             payload={
                 "sub": user["id"],
