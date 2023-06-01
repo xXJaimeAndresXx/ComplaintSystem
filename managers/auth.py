@@ -5,6 +5,7 @@ from decouple import config
 from fastapi import HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette.requests import Request
+from models import RoleType
 
 from db import database
 from models import user
@@ -35,3 +36,17 @@ class CustomHTTPBearer(HTTPBearer):
             raise HTTPException(481, "Token is expired")
         except jwt.InvalidTokenError:
             raise HTTPException(481, "Invalid Token")
+
+oauth2_scheme= CustomHTTPBearer()
+        
+def is_complainer(request: Request):
+    if not request.state.user["role"] == RoleType.complainer:
+        raise HTTPException(403, "Forbidden")
+
+def is_approver(request: Request):
+    if not request.state.user["role"] == RoleType.approver:
+        raise HTTPException(403, "Forbidden")
+
+def is_admin(request: Request):
+    if not request.state.user["role"] == RoleType.admin:
+        raise HTTPException(403, "Forbidden")
