@@ -10,7 +10,21 @@ Complaint System requires [Python](https://www.python.org/) v3.11.3 to run.
 Install the dependencies and devDependencies and start the server.
 
 ```sh
+$ python -m venv c:\path\to\myenv
+$ venv\Scripts\activate.bat
 $ pip install -r requirements.txt
+$ uvicorn main:app
+```
+Database used: PostgreSQL
+If you dont have the database created you can run this script inside your project folder
+```sh
+$ alembic upgrade head
+```
+In case you dont have an admin user already on your database, this command could be useful.
+replace {...} with the desired data of the user
+```sh
+$ python commands/create_super_user.py -f {Test} -l {Admin} -e {admin@admin.com} -p {1234} 
+-i {ES9121000418450200051332} -pa {1234}
 ```
 
 
@@ -20,26 +34,3 @@ $ pip install -r requirements.txt
 MIT
 
 **Free Software, Hell Yeah!**
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
