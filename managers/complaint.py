@@ -1,13 +1,16 @@
 import uuid
 import os
-from models import complaint, RoleType, State
+from models import user, complaint, RoleType, State
 from db import database
 from services.s3 import S3Service
+from services.ses import SESService
 from constants import TEMP_FILE_FOLDER
 from utils.helpers import decode_photo
+from sqlalchemy import join, select
 
 
 s3= S3Service()
+ses= SESService()
 
 
 class ComplaintManager:
@@ -39,10 +42,16 @@ class ComplaintManager:
 
     @staticmethod
     async def approve(id_):
+        for rec in await database.fetch_all(select([user.c.email]).select_from(complaint.join(user)).where(complaint.c.id == 6)):
+            result=list(rec.values())
         await database.execute(complaint.update().where(complaint.c.id == id_).values(status = State.approved))
+        ses.send_mail("Your complaint is approved", [result[0]],"Congrats! You complaint is approved. Please check your bank account after 2 business days to verify the claimed amount is there.\n King regards!")
 
     @staticmethod
     async def reject(id_):
+        for rec in await database.fetch_all(select([user.c.email]).select_from(complaint.join(user)).where(complaint.c.id == 6)):
+            result=list(rec.values())
         await database.execute(complaint.update().where(complaint.c.id == id_).values(status = State.rejected))
+        ses.send_mail("Your complaint is rejected", [result[0]],":( You complaint is rejected. Sorry for the inconvenience")
     
     
